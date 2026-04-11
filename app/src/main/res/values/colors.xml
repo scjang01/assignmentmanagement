@@ -2,4 +2,24 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Tag Colors -->
+    <color name="tag_missed_bg">#BA1A1A</color>
+    <color name="tag_missed_text">#FFFFFF</color>
+
+    <color name="tag_completed_bg">#E0F2F4</color>
+    <color name="tag_completed_text">#00AB93</color>
+
+    <color name="tag_in_progress_bg">#C2D1E8</color>
+    <color name="tag_in_progress_text">#00429C</color>
+
+    <!-- Category Tag Colors (Example: Quiz) -->
+    <color name="tag_quiz_bg">#F0A6E1</color>
+    <color name="tag_quiz_text">#B41F96</color>
+
+    <!-- Card Colors -->
+    <color name="card_missed_bg">#1ABA1A1A</color> <!-- rgba(186, 26, 26, 0.1) approx -->
+    <color name="card_missed_border">#BA1A1A</color>
+    <color name="card_title_missed">#93000A</color>
+    <color name="card_subtitle_missed">#B393000A</color> <!-- 70% opacity -->
 </resources>

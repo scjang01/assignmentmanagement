@@ -1,0 +1,30 @@
+[
+  {
+    "subject": "AI 프로그래밍",
+    "title": "중간고사 대체 레포트",
+    "deadline": "2026-04-10 10:00",
+    "isSubmitted": false,
+    "link": "https://canvas.university.edu/courses/1/assignments/101"
+  },
+  {
+    "subject": "데이터베이스",
+    "title": "SQL 실습 과제 #3",
+    "deadline": "2026-04-12 23:59",
+    "isSubmitted": true,
+    "link": "https://canvas.university.edu/courses/2/assignments/202"
+  },
+  {
+    "subject": "운영체제",
+    "title": "VOD 시청 및 요약",
+    "deadline": "2026-04-11 18:00",
+    "isSubmitted": false,
+    "link": "https://canvas.university.edu/courses/3/assignments/303"
+  },
+  {
+    "subject": "자료구조",
+    "title": "이진 트리 구현 과제",
+    "deadline": "2026-04-15 09:00",
+    "isSubmitted": false,
+    "link": "https://canvas.university.edu/courses/4/assignments/404"
+  }
+]

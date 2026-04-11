@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="24dp"
+    android:layout_marginVertical="8dp"
+    android:background="@drawable/bg_card_missed"
+    android:elevation="2dp"
+    android:padding="20dp"
+    android:paddingStart="32dp"> <!-- extra padding for the left border -->
+
+    <LinearLayout
+        android:id="@+id/ll_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/tv_status_tag"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_category_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_tag_quiz"
+            android:text="@string/tag_quiz"
+            android:textColor="@color/tag_quiz_text"
+            android:textSize="9sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_assignment_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="AI Programming Quiz"
+            android:textColor="@color/card_title_missed"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_due_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="@string/due_date_missed"
+            android:textColor="@color/card_subtitle_missed"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_status_tag"
+        android:layout_width="50dp"
+        android:layout_height="24dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/bg_tag_missed"
+        android:gravity="center"
+        android:text="@string/tag_missed"
+        android:textColor="@color/tag_missed_text"
+        android:textSize="11sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

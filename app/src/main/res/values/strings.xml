@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">assignment-management</string>
+    <string name="tag_missed">마감됨</string>
+    <string name="tag_completed">완료됨</string>
+    <string name="tag_in_progress">진행중</string>
+    <string name="tag_quiz">퀴즈</string>
+    <string name="due_date_missed">시간지남! 기한: 10:00 AM</string>
+    <string name="my_page">마이페이지</string>
+    <string name="assignment">과제</string>
+    <string name="group_assignment">조별과제</string>
 </resources>
