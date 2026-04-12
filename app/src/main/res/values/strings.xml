@@ -8,4 +8,9 @@
     <string name="my_page">마이페이지</string>
     <string name="assignment">과제</string>
     <string name="group_assignment">조별과제</string>
+    <string name="toolbar_title">Home</string>
+    <string name="stat_in_progress">진행중</string>
+    <string name="stat_urgent">임박</string>
+    <string name="stat_completed">완료</string>
+    <string name="stat_missed">마감</string>
 </resources>

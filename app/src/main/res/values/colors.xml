@@ -3,6 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="background">#F8F9FE</color>>
+
     <!-- Tag Colors -->
     <color name="tag_missed_bg">#BA1A1A</color>
     <color name="tag_missed_text">#FFFFFF</color>
@@ -13,13 +15,37 @@
     <color name="tag_in_progress_bg">#C2D1E8</color>
     <color name="tag_in_progress_text">#00429C</color>
 
-    <!-- Category Tag Colors (Example: Quiz) -->
-    <color name="tag_quiz_bg">#F0A6E1</color>
+    <!-- Category Tag Colors -->
+    <color name="tag_quiz_bg">#94E566CB</color> <!-- rgba(229, 102, 203, 0.58) approx -->
     <color name="tag_quiz_text">#B41F96</color>
+    
+    <color name="tag_recorded_bg">#FFB5B5</color>
+    <color name="tag_recorded_text">#F73F3F</color>
+
+    <color name="tag_live_bg">#4F2F59DD</color> <!-- rgba(47, 89, 221, 0.31) approx -->
+    <color name="tag_live_text">#1739A5</color>
+
+    <color name="tag_assignment_bg">#854BD627</color> <!-- rgba(75, 214, 39, 0.52) approx -->
+    <color name="tag_assignment_text">#209B00</color>
 
     <!-- Card Colors -->
     <color name="card_missed_bg">#1ABA1A1A</color> <!-- rgba(186, 26, 26, 0.1) approx -->
     <color name="card_missed_border">#BA1A1A</color>
     <color name="card_title_missed">#93000A</color>
     <color name="card_subtitle_missed">#B393000A</color> <!-- 70% opacity -->
+    
+    <color name="card_normal_bg">#FFFFFF</color>
+    <color name="card_completed_border">#00AB93</color>
+    <color name="card_in_progress_border">#001944</color>
+    <color name="card_title_normal">#191C1F</color>
+    <color name="card_subtitle_normal">#454652</color>
+
+    <!-- Toolbar Colors -->
+    <color name="toolbar_bg">#CCF8F9FE</color> <!-- rgba(248, 249, 254, 0.8) approx -->
+    <color name="toolbar_title">#001944</color>
+
+    <!-- Statistics Bar Colors -->
+    <color name="stat_label">#454652</color>
+    <color name="stat_urgent_border">#D97706</color>
+    <color name="stat_urgent_text">#D97706</color>
 </resources>

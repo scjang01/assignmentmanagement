@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 
+    RelativeLayout: 뷰를 부모(parent)나 다른 뷰(id 기준)와의 상대적인 위치로 배치합니다.
+    여기서는 전체적인 카드 형태를 만들기 위해 사용했습니다.
+-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,8 +11,12 @@
     android:background="@drawable/bg_card_missed"
     android:elevation="2dp"
     android:padding="20dp"
-    android:paddingStart="32dp"> <!-- extra padding for the left border -->
+    android:paddingStart="32dp">
 
+    <!-- 
+        LinearLayout (vertical): 아이템 내부의 정보(카테고리 태그 - 제목 - 마감기한)를 
+        세로로 순서대로 쌓기 위해 사용했습니다. 
+    -->
     <LinearLayout
         android:id="@+id/ll_content"
         android:layout_width="wrap_content"
@@ -18,6 +26,7 @@
         android:layout_toStartOf="@+id/tv_status_tag"
         android:orientation="vertical">
 
+        <!-- 과제의 카테고리(예: 퀴즈, 팀 과제 등)를 보여주는 작은 태그입니다. -->
         <TextView
             android:id="@+id/tv_category_tag"
             android:layout_width="wrap_content"
@@ -28,6 +37,7 @@
             android:textSize="9sp"
             android:textStyle="bold" />
 
+        <!-- 과제의 제목을 보여주는 굵은 텍스트입니다. -->
         <TextView
             android:id="@+id/tv_assignment_title"
             android:layout_width="wrap_content"
@@ -38,6 +48,7 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
+        <!-- 과제의 마감 기한을 보여주는 텍스트입니다. -->
         <TextView
             android:id="@+id/tv_due_date"
             android:layout_width="wrap_content"
@@ -49,6 +60,9 @@
 
     </LinearLayout>
 
+    <!-- 
+        제출 상태(완료/미제출)를 보여주는 태그로, 부모 레이아웃의 오른쪽 끝(End)에 배치됩니다.
+    -->
     <TextView
         android:id="@+id/tv_status_tag"
         android:layout_width="50dp"
