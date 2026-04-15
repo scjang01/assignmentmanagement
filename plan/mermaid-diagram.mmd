@@ -1,0 +1,32 @@
+graph TD
+    subgraph "Data Layer"
+        A[assignments.json] --> B[AssignmentRepository]
+    end
+
+    subgraph "Logic Layer (MainActivity)"
+        B -- "getAssignments()" --> C{Sorting & Grouping}
+        C -- "1. Sort by Deadline" --> D[Sorted List]
+        D -- "2. Insert DateHeader" --> E[displayItems (Mixed List)]
+        
+        E -- "Calculate stats" --> F[Update Top Stats Bar]
+    end
+
+    subgraph "UI Layer (RecyclerView)"
+        E -- "Set Adapter" --> G[AssignmentAdapter]
+        G -- "getItemViewType()" --> H{View Type?}
+        H -- "TYPE_HEADER" --> I[Render item_date_header.xml]
+        H -- "TYPE_ITEM" --> J[Render item_assignment.xml]
+        
+        J -- "Binding" --> K{Status Check}
+        K -- "Submitted" --> L[Completed Style]
+        K -- "Overdue" --> M[Missed Style]
+        K -- "Within 24h" --> N[Urgent Style]
+        K -- "Normal" --> O[In Progress Style]
+    end
+
+    F --> UI_Display[Final Main Screen]
+    I --> UI_Display
+    L --> UI_Display
+    M --> UI_Display
+    N --> UI_Display
+    O --> UI_Display

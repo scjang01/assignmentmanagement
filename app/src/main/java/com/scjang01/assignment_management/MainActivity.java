@@ -15,11 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.scjang01.assignment_management.data.AssignmentRepository;
 import com.scjang01.assignment_management.model.AssignmentItem;
+import com.scjang01.assignment_management.model.DateHeader;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 메인 화면 로직
@@ -54,7 +58,40 @@ public class MainActivity extends AppCompatActivity {
 
         List<AssignmentItem> assignmentList = repository.getAssignments();
 
-        // 전체 과제 돌면서 상태값(뱃지 숫자) 계산
+        // 마감 기한 기준 오름차순 정렬
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            Collections.sort(assignmentList, (item1, item2) -> {
+                LocalDateTime date1 = LocalDateTime.parse(item1.getDeadline(), formatter);
+                LocalDateTime date2 = LocalDateTime.parse(item2.getDeadline(), formatter);
+                return date1.compareTo(date2);
+            });
+        }
+
+        // 날짜별 헤더를 포함한 새 리스트 생성
+        List<Object> displayItems = new ArrayList<>();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String lastDate = "";
+            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            DateTimeFormatter headerFormatter = DateTimeFormatter.ofPattern("M. d(E)", Locale.KOREAN);
+
+            for (AssignmentItem item : assignmentList) {
+                LocalDateTime dateTime = LocalDateTime.parse(item.getDeadline(), inputFormatter);
+                String currentDate = dateTime.toLocalDate().toString();
+
+                // 날짜가 변경될 때마다 헤더 객체 삽입
+                if (!currentDate.equals(lastDate)) {
+                    displayItems.add(new DateHeader(dateTime.format(headerFormatter)));
+                    lastDate = currentDate;
+                }
+                displayItems.add(item);
+            }
+        } else {
+            // API 26 미만 기기는 헤더 없이 리스트 구성
+            displayItems.addAll(assignmentList);
+        }
+
+        // 통계 바 데이터 계산
         for (AssignmentItem item : assignmentList) {
             LocalDateTime now = null;
             DateTimeFormatter formatter = null;
@@ -102,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         
         // 어댑터 붙여서 화면에 리스트 뿌리기
-        AssignmentAdapter adapter = new AssignmentAdapter(assignmentList);
+        AssignmentAdapter adapter = new AssignmentAdapter(displayItems);
         recyclerView.setAdapter(adapter);
     }
 }

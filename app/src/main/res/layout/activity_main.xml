@@ -38,7 +38,7 @@
         android:orientation="horizontal"
         android:paddingHorizontal="24dp"
         android:paddingTop="8dp"
-        android:paddingBottom="8dp"
+        android:paddingBottom="12dp"
         android:weightSum="4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/stat_in_progress"
-                android:textColor="@color/stat_label"
+                android:textColor="@color/card_in_progress_border"
                 android:textSize="10sp"
                 android:textStyle="bold" />
             <TextView
@@ -86,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/stat_urgent"
-                android:textColor="@color/stat_label"
+                android:textColor="@color/card_urgent_border"
                 android:textSize="10sp"
                 android:textStyle="bold" />
             <TextView
@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 tools:text="00"
-                android:textColor="@color/stat_urgent_text"
+                android:textColor="@color/card_urgent_border"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -114,7 +114,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/stat_completed"
-                android:textColor="@color/stat_label"
+                android:textColor="@color/card_completed_border"
                 android:textSize="10sp"
                 android:textStyle="bold" />
             <TextView
@@ -142,7 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/stat_missed"
-                android:textColor="@color/stat_label"
+                android:textColor="@color/card_missed_border"
                 android:textSize="10sp"
                 android:textStyle="bold" />
             <TextView
@@ -167,8 +167,10 @@
         android:paddingBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ll_stats_bar"
+        app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/item_assignment" />
 
     <!-- 하단 네비바
@@ -178,21 +180,19 @@
         android:id="@+id/bottom_nav_menu"
         style="@style/Widget.App.BottomNavigationView"
         android:layout_width="312dp"
-        android:layout_height="wrap_content"
+        android:layout_height="72dp"
         android:layout_marginBottom="40dp"
 
         android:background="@drawable/bg_bottom_nav"
         app:backgroundTint="@null"
-        android:elevation="8dp"
+        android:elevation="12dp"
 
-        app:itemIconSize="22dp"
-        app:itemPaddingTop="8dp"
-        app:itemPaddingBottom="8dp"
-        
+        app:itemIconSize="24dp"
+
         app:itemTextAppearanceActive="@style/BottomNavText"
         app:itemTextAppearanceInactive="@style/BottomNavText"
 
-        app:labelVisibilityMode="auto"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

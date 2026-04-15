@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@color/card_missed_border" />
+            <solid android:color="@color/card_urgent_border" />
             <corners android:radius="24dp" />
         </shape>
     </item>
@@ -10,7 +10,7 @@
     <item
         android:bottom="0dp" android:left="6dp" android:right="0dp" android:top="0dp">
         <shape android:shape="rectangle">
-            <solid android:color="@color/card_missed_bg" />
+            <solid android:color="@color/card_urgent_bg" />
             <corners
                 android:radius="24dp" />
         </shape>
