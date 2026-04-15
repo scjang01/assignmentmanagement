@@ -36,7 +36,7 @@
     
     <color name="card_normal_bg">#FFFFFF</color>
     <color name="card_completed_border">#00AB93</color>
-    <color name="card_in_progress_border">#001944</color>
+    <color name="card_in_progress_border">#00429C</color>
     <color name="card_title_normal">#191C1F</color>
     <color name="card_subtitle_normal">#454652</color>
 

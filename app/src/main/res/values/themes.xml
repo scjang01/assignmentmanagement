@@ -7,6 +7,18 @@
 
     <style name="Theme.Assignmentmanagement" parent="Base.Theme.Assignmentmanagement" />
 
+    <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="enforceTextAppearance">true</item>
+        <item name="enforceMaterialTheme">true</item>
+        <!-- 인디케이터(배경 타원) 제거 -->
+        <item name="indicatorColor">@android:color/transparent</item>
+    </style>
+
+    <style name="BottomNavText" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="overdue">
         <item name="android:textSize">11sp</item>
         <item name="android:textColor">#FFFFFF</item>

@@ -3,21 +3,21 @@
     "subject": "AI 프로그래밍",
     "title": "중간고사 대체 레포트",
     "category": "과제",
-    "deadline": "2026-04-10 10:00",
+    "deadline": "2026-04-12 10:00",
     "isSubmitted": false,
     "link": "https://canvas.university.edu/courses/1/assignments/101"
   },
   {
     "subject": "데이터베이스",
-    "title": "SQL 실습 퀴즈",
+    "title": "SQL 3주차 퀴즈",
     "category": "퀴즈",
-    "deadline": "2026-04-12 23:59",
-    "isSubmitted": true,
+    "deadline": "2026-04-14 23:59",
+    "isSubmitted": false,
     "link": "https://canvas.university.edu/courses/2/assignments/202"
   },
   {
     "subject": "운영체제",
-    "title": "OS VOD 시청 1주차",
+    "title": "OS 1주차 MOOC",
     "category": "녹화강의",
     "deadline": "2026-04-15 18:00",
     "isSubmitted": false,
@@ -25,7 +25,7 @@
   },
   {
     "subject": "자료구조",
-    "title": "이진 트리 라이브 세션 출석",
+    "title": "3주차 실시간 강의",
     "category": "실시간강의",
     "deadline": "2026-04-16 09:00",
     "isSubmitted": false,
@@ -33,7 +33,7 @@
   },
   {
     "subject": "컴퓨터네트워크",
-    "title": "TCP/IP 소켓 프로그래밍",
+    "title": "웹소켓 프로그래밍",
     "category": "과제",
     "deadline": "2026-04-20 23:59",
     "isSubmitted": true,

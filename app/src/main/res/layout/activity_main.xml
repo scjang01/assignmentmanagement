@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!-- 
-    ConstraintLayout: 뷰 간의 관계(제약 조건)를 설정하여 유연한 레이아웃을 만들 수 있는 레이아웃입니다. 
-    상하좌우 연결선(app:layout_constraint...)을 통해 뷰의 위치를 결정합니다.
--->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,6 +8,7 @@
     android:background="@color/background"
     tools:context=".MainActivity">
 
+    <!-- 상단 툴바 -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -34,20 +30,21 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <!-- 통계 바 -->
     <LinearLayout
         android:id="@+id/ll_stats_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingHorizontal="24dp"
-        android:paddingTop="16dp"
+        android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:weightSum="4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-        <!-- 진행중 -->
+        <!-- 진행중 통계 -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="72dp"
@@ -68,13 +65,14 @@
                 android:id="@+id/tv_count_in_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="12"
+                android:text=""
+                tools:text="00"
                 android:textColor="@color/card_in_progress_border"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <!-- 임박 -->
+        <!-- 임박 통계 -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="72dp"
@@ -95,13 +93,14 @@
                 android:id="@+id/tv_count_urgent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="03"
+                android:text=""
+                tools:text="00"
                 android:textColor="@color/stat_urgent_text"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <!-- 완료 -->
+        <!-- 완료 통계 -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="72dp"
@@ -122,18 +121,19 @@
                 android:id="@+id/tv_count_completed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="08"
+                android:text=""
+                tools:text="00"
                 android:textColor="@color/card_completed_border"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <!-- 마감 -->
+        <!-- 마감 통계 -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="72dp"
             android:layout_weight="1"
-            android:layout_marginStart="4dp"
+            android:layout_marginHorizontal="4dp"
             android:background="@drawable/bg_stat_missed"
             android:elevation="2dp"
             android:gravity="center"
@@ -149,19 +149,15 @@
                 android:id="@+id/tv_count_missed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="01"
+                android:text=""
+                tools:text="00"
                 android:textColor="@color/card_missed_border"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
     
-    <!-- 
-        RecyclerView: 대량의 리스트를 효율적으로 보여주는 위젯입니다.
-        - 데이터 하나하나를 직접 만들지 않고, '틀(아이템 레이아웃)'에 데이터를 끼워넣어 보여줍니다.
-        - 상단을 통계 바 하단에 맞춰 배치했습니다.
-        - tools:listitem 옵션은 안드로이드 스튜디오 미리보기에서 아이템 형태를 확인할 때 유용합니다.
-    -->
+    <!-- 과제 목록 리스트 -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_assignments"
         android:layout_width="0dp"
@@ -171,10 +167,35 @@
         android:paddingBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ll_stats_bar"
-        app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/item_assignment" />
 
+    <!-- 하단 네비바
+    TODO:fix:에뮬레이터에서 아이콘과 글자가 겹치거나 가운데 정렬 안되는 문제
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav_menu"
+        style="@style/Widget.App.BottomNavigationView"
+        android:layout_width="312dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+
+        android:background="@drawable/bg_bottom_nav"
+        app:backgroundTint="@null"
+        android:elevation="8dp"
+
+        app:itemIconSize="22dp"
+        app:itemPaddingTop="8dp"
+        app:itemPaddingBottom="8dp"
+        
+        app:itemTextAppearanceActive="@style/BottomNavText"
+        app:itemTextAppearanceInactive="@style/BottomNavText"
+
+        app:labelVisibilityMode="auto"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
+        -->
 </androidx.constraintlayout.widget.ConstraintLayout>
