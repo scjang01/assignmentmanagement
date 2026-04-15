@@ -1,6 +1,7 @@
 package com.scjang01.assignment_management;
 
 import android.graphics.Paint;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
- * 과제 목록을 위한 RecyclerView 어댑터
+ * 과제 리스트 보여주는 리사이클러뷰 어댑터
  */
 public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.ViewHolder> {
 
@@ -42,7 +43,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
         holder.tvCategory.setText(item.getCategory() != null ? item.getCategory() : "기타");
         holder.tvDueDate.setText(item.getDeadline());
 
-        // 카테고리에 따른 태그 스타일 적용
+        // 카테고리별로 태그 디자인(색상) 다르게 적용
         String category = item.getCategory() != null ? item.getCategory() : "";
         switch (category) {
             case "퀴즈":
@@ -64,21 +65,25 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
                 break;
         }
 
-        // 마감 기한 초과 여부 확인
+        // 현재 시간 기준으로 마감 지났는지 체크
         boolean isMissed = false;
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            LocalDateTime deadline = LocalDateTime.parse(item.getDeadline(), formatter);
-            if (LocalDateTime.now().isAfter(deadline)) {
-                isMissed = true;
+            DateTimeFormatter formatter = null;
+            LocalDateTime deadline = null;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                deadline = LocalDateTime.parse(item.getDeadline(), formatter);
+                if (LocalDateTime.now().isAfter(deadline)) {
+                    isMissed = true;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // 제출 상태 및 마감 여부에 따른 UI 업데이트
+        // 제출했거나 마감 지났을 때 카드 스타일 업데이트
         if (item.isSubmitted()) {
-            // 완료 상태
+            // 완료: 배경 바꾸고 타이틀에 취소선 긋기
             holder.itemView.setBackgroundResource(R.drawable.bg_card_completed);
             holder.tvTitle.setTextColor(holder.itemView.getContext().getColor(R.color.card_title_normal));
             holder.tvDueDate.setTextColor(holder.itemView.getContext().getColor(R.color.card_subtitle_normal));
@@ -88,7 +93,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
             holder.tvStatus.setBackgroundResource(R.drawable.bg_tag_completed);
             holder.tvStatus.setTextColor(holder.itemView.getContext().getColor(R.color.tag_completed_text));
         } else if (isMissed) {
-            // 마감 기한 초과 상태
+            // 마감 지남: 붉은 계열 배경으로 변경
             holder.itemView.setBackgroundResource(R.drawable.bg_card_missed);
             holder.tvTitle.setTextColor(holder.itemView.getContext().getColor(R.color.card_title_missed));
             holder.tvDueDate.setTextColor(holder.itemView.getContext().getColor(R.color.card_subtitle_missed));
@@ -98,7 +103,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
             holder.tvStatus.setBackgroundResource(R.drawable.bg_tag_missed);
             holder.tvStatus.setTextColor(holder.itemView.getContext().getColor(R.color.tag_missed_text));
         } else {
-            // 진행 중 상태
+            // 진행 중: 기본 스타일
             holder.itemView.setBackgroundResource(R.drawable.bg_card_in_progress);
             holder.tvTitle.setTextColor(holder.itemView.getContext().getColor(R.color.card_title_normal));
             holder.tvDueDate.setTextColor(holder.itemView.getContext().getColor(R.color.card_subtitle_normal));
@@ -116,7 +121,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
     }
 
     /**
-     * 아이템 뷰 홀더 클래스
+     * 리스트 아이템 뷰홀더
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvCategory, tvTitle, tvDueDate, tvStatus;

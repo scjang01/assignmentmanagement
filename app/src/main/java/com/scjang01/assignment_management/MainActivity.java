@@ -13,53 +13,49 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.scjang01.assignment_management.data.AssignmentRepository;
 import com.scjang01.assignment_management.model.AssignmentItem;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Type;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 메인 액티비티 클래스
+ * 메인 화면 로직
  */
 public class MainActivity extends AppCompatActivity {
+
+    private AssignmentRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        // Edge-to-Edge 설정
+        // 화면 상단바/하단바 영역까지 꽉 채우기
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
         
-        //Toolbar 설정
+        // 데이터 가져올 준비
+        repository = new AssignmentRepository(this);
+        
+        // 상단 툴바 설정 (타이틀 안 보이게 처리)
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
-        findViewById(R.id.tv_count_in_progress);
-        findViewById(R.id.tv_count_urgent);
-        findViewById(R.id.tv_count_completed);
-        findViewById(R.id.tv_count_missed);
-
-        int countInprogress = 0;
+        // 진행/임박/완료/마감 숫자 텍스트뷰들
+        int countInProgress = 0;
         int countUrgent = 0;
         int countCompleted = 0;
         int countMissed = 0;
 
-        List<AssignmentItem> items = loadAssignmentsFromJson();
+        List<AssignmentItem> assignmentList = repository.getAssignments();
 
-        for (AssignmentItem item : items) {
+        // 전체 과제 돌면서 상태값(뱃지 숫자) 계산
+        for (AssignmentItem item : assignmentList) {
             LocalDateTime now = null;
             DateTimeFormatter formatter = null;
             long hoursLeft = 0;
@@ -76,66 +72,37 @@ public class MainActivity extends AppCompatActivity {
             } else if (hoursLeft < 0) {
                 countMissed++;
             } else {
-                countInprogress++;
-                if (hoursLeft <= 24) {
+                countInProgress++;
+                if (hoursLeft <= 24) { // 마감 24시간 안 남았으면 임박
                     countUrgent++;
                 }
             }
         }
 
+        // 상단 통계 숫자 업데이트 (02, 05 처럼 두자리 포맷 유지)
         TextView tvInProgress = findViewById(R.id.tv_count_in_progress);
         TextView tvUrgent = findViewById(R.id.tv_count_urgent);
         TextView tvCompleted = findViewById(R.id.tv_count_completed);
         TextView tvMissed = findViewById(R.id.tv_count_missed);
 
-        tvInProgress.setText(String.format("%02d", countInprogress));
+        tvInProgress.setText(String.format("%02d", countInProgress));
         tvUrgent.setText(String.format("%02d", countUrgent));
         tvCompleted.setText(String.format("%02d", countCompleted));
         tvMissed.setText(String.format("%02d", countMissed));
 
-        // 작업 중(끝지점)
-
-        // 시스템 바 인셋 적용 (Padding 설정)
+        // 상태바/네비바 때문에 레이아웃 가려지지 않게 여백 조정
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // 1. JSON 데이터 로드
-        List<AssignmentItem> assignmentList = loadAssignmentsFromJson();
-
-        // 2. RecyclerView 설정
+        // 리스트(RecyclerView) 설정
         RecyclerView recyclerView = findViewById(R.id.rv_assignments);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         
-        // 3. 어댑터 연결
+        // 어댑터 붙여서 화면에 리스트 뿌리기
         AssignmentAdapter adapter = new AssignmentAdapter(assignmentList);
         recyclerView.setAdapter(adapter);
-    }
-
-    /**
-     * assets/assignments.json 파일에서 데이터를 읽어 리스트로 변환
-     */
-    private List<AssignmentItem> loadAssignmentsFromJson() {
-        String json = null;
-        try {
-            InputStream is = getAssets().open("assignments.json");
-            int size = is.available();
-            byte[] buffer = new byte[size]; // 데이터 읽기용 버퍼
-            is.read(buffer);
-            is.close();
-            
-            // UTF-8 인코딩으로 문자열 변환
-            json = new String(buffer, StandardCharsets.UTF_8);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return new ArrayList<>();
-        }
-
-        // Gson을 이용한 객체 역직렬화
-        Gson gson = new Gson();
-        Type listType = new TypeToken<List<AssignmentItem>>() {}.getType();
-        return gson.fromJson(json, listType);
     }
 }
