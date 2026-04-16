@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.scjang01.assignment_management.databinding.ItemAssignmentBinding;
+import com.scjang01.assignment_management.databinding.ItemDateHeaderBinding;
 import com.scjang01.assignment_management.model.AssignmentItem;
 import com.scjang01.assignment_management.model.DateHeader;
 
@@ -45,13 +47,13 @@ public class AssignmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == TYPE_HEADER) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_date_header, parent, false);
-            return new HeaderViewHolder(view);
+            ItemDateHeaderBinding binding = ItemDateHeaderBinding.inflate(
+                    LayoutInflater.from(parent.getContext()), parent, false);
+            return new HeaderViewHolder(binding);
         } else {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_assignment, parent, false);
-            return new ItemViewHolder(view);
+            ItemAssignmentBinding binding = ItemAssignmentBinding.inflate(
+                    LayoutInflater.from(parent.getContext()), parent, false);
+            return new ItemViewHolder(binding);
         }
     }
 
@@ -59,7 +61,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof HeaderViewHolder) {
             DateHeader header = (DateHeader) items.get(position);
-            ((HeaderViewHolder) holder).tvDateHeader.setText(header.getDate());
+            ((HeaderViewHolder) holder).binding.tvDateHeader.setText(header.getDate());
         } else if (holder instanceof ItemViewHolder) {
             AssignmentItem item = (AssignmentItem) items.get(position);
             bindItemViewHolder((ItemViewHolder) holder, item);
@@ -67,29 +69,30 @@ public class AssignmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private void bindItemViewHolder(ItemViewHolder holder, AssignmentItem item) {
-        holder.tvTitle.setText(item.getTitle());
-        holder.tvCategory.setText(item.getCategory() != null ? item.getCategory() : "기타");
-        holder.tvDueDate.setText(item.getDeadline());
+        ItemAssignmentBinding binding = holder.binding;
+        binding.tvAssignmentTitle.setText(item.getTitle());
+        binding.tvCategoryTag.setText(item.getCategory() != null ? item.getCategory() : "기타");
+        binding.tvDueDate.setText(item.getDeadline());
 
         // 카테고리별 태그 배경 및 텍스트 색상 설정
         String category = item.getCategory() != null ? item.getCategory() : "";
         switch (category) {
             case "퀴즈":
-                holder.tvCategory.setBackgroundResource(R.drawable.bg_tag_quiz);
-                holder.tvCategory.setTextColor(holder.itemView.getContext().getColor(R.color.tag_quiz_text));
+                binding.tvCategoryTag.setBackgroundResource(R.drawable.bg_tag_quiz);
+                binding.tvCategoryTag.setTextColor(holder.itemView.getContext().getColor(R.color.tag_quiz_text));
                 break;
             case "녹화강의":
-                holder.tvCategory.setBackgroundResource(R.drawable.bg_tag_recorded);
-                holder.tvCategory.setTextColor(holder.itemView.getContext().getColor(R.color.tag_recorded_text));
+                binding.tvCategoryTag.setBackgroundResource(R.drawable.bg_tag_recorded);
+                binding.tvCategoryTag.setTextColor(holder.itemView.getContext().getColor(R.color.tag_recorded_text));
                 break;
             case "실시간강의":
-                holder.tvCategory.setBackgroundResource(R.drawable.bg_tag_live);
-                holder.tvCategory.setTextColor(holder.itemView.getContext().getColor(R.color.tag_live_text));
+                binding.tvCategoryTag.setBackgroundResource(R.drawable.bg_tag_live);
+                binding.tvCategoryTag.setTextColor(holder.itemView.getContext().getColor(R.color.tag_live_text));
                 break;
             case "과제":
             default:
-                holder.tvCategory.setBackgroundResource(R.drawable.bg_tag_assignment);
-                holder.tvCategory.setTextColor(holder.itemView.getContext().getColor(R.color.tag_assignment_text));
+                binding.tvCategoryTag.setBackgroundResource(R.drawable.bg_tag_assignment);
+                binding.tvCategoryTag.setTextColor(holder.itemView.getContext().getColor(R.color.tag_assignment_text));
                 break;
         }
 
@@ -118,44 +121,44 @@ public class AssignmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         // 제출 여부 및 기한 상태에 따른 카드 스타일 적용
         if (item.isSubmitted()) {
             // 제출 완료 상태
-            holder.itemView.setBackgroundResource(R.drawable.bg_card_completed);
-            holder.tvTitle.setTextColor(holder.itemView.getContext().getColor(R.color.card_title_normal));
-            holder.tvDueDate.setTextColor(holder.itemView.getContext().getColor(R.color.card_subtitle_normal));
-            holder.tvTitle.setPaintFlags(holder.tvTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            binding.getRoot().setBackgroundResource(R.drawable.bg_card_completed);
+            binding.tvAssignmentTitle.setTextColor(holder.itemView.getContext().getColor(R.color.card_title_normal));
+            binding.tvDueDate.setTextColor(holder.itemView.getContext().getColor(R.color.card_subtitle_normal));
+            binding.tvAssignmentTitle.setPaintFlags(binding.tvAssignmentTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-            holder.tvStatus.setText(R.string.tag_completed);
-            holder.tvStatus.setBackgroundResource(R.drawable.bg_tag_completed);
-            holder.tvStatus.setTextColor(holder.itemView.getContext().getColor(R.color.tag_completed_text));
+            binding.tvStatusTag.setText(R.string.tag_completed);
+            binding.tvStatusTag.setBackgroundResource(R.drawable.bg_tag_completed);
+            binding.tvStatusTag.setTextColor(holder.itemView.getContext().getColor(R.color.tag_completed_text));
         } else if (isMissed) {
             // 마감 지남 상태
-            holder.itemView.setBackgroundResource(R.drawable.bg_card_missed);
-            holder.tvTitle.setTextColor(holder.itemView.getContext().getColor(R.color.card_title_missed));
-            holder.tvDueDate.setTextColor(holder.itemView.getContext().getColor(R.color.card_subtitle_missed));
-            holder.tvTitle.setPaintFlags(holder.tvTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+            binding.getRoot().setBackgroundResource(R.drawable.bg_card_missed);
+            binding.tvAssignmentTitle.setTextColor(holder.itemView.getContext().getColor(R.color.card_title_missed));
+            binding.tvDueDate.setTextColor(holder.itemView.getContext().getColor(R.color.card_subtitle_missed));
+            binding.tvAssignmentTitle.setPaintFlags(binding.tvAssignmentTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
 
-            holder.tvStatus.setText(R.string.tag_missed);
-            holder.tvStatus.setBackgroundResource(R.drawable.bg_tag_missed);
-            holder.tvStatus.setTextColor(holder.itemView.getContext().getColor(R.color.tag_missed_text));
+            binding.tvStatusTag.setText(R.string.tag_missed);
+            binding.tvStatusTag.setBackgroundResource(R.drawable.bg_tag_missed);
+            binding.tvStatusTag.setTextColor(holder.itemView.getContext().getColor(R.color.tag_missed_text));
         } else if (isUrgent) {
             // 마감 임박 상태 (24시간 이내)
-            holder.itemView.setBackgroundResource(R.drawable.bg_card_urgent);
-            holder.tvTitle.setTextColor(holder.itemView.getContext().getColor(R.color.card_title_urgent));
-            holder.tvDueDate.setTextColor(holder.itemView.getContext().getColor(R.color.card_subtitle_urgent));
-            holder.tvTitle.setPaintFlags(holder.tvTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+            binding.getRoot().setBackgroundResource(R.drawable.bg_card_urgent);
+            binding.tvAssignmentTitle.setTextColor(holder.itemView.getContext().getColor(R.color.card_title_urgent));
+            binding.tvDueDate.setTextColor(holder.itemView.getContext().getColor(R.color.card_subtitle_urgent));
+            binding.tvAssignmentTitle.setPaintFlags(binding.tvAssignmentTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
 
-            holder.tvStatus.setText(R.string.tag_urgent);
-            holder.tvStatus.setBackgroundResource(R.drawable.bg_tag_urgent);
-            holder.tvStatus.setTextColor(holder.itemView.getContext().getColor(R.color.tag_urgent_text));
+            binding.tvStatusTag.setText(R.string.tag_urgent);
+            binding.tvStatusTag.setBackgroundResource(R.drawable.bg_tag_urgent);
+            binding.tvStatusTag.setTextColor(holder.itemView.getContext().getColor(R.color.tag_urgent_text));
         } else {
             // 진행 중 상태
-            holder.itemView.setBackgroundResource(R.drawable.bg_card_in_progress);
-            holder.tvTitle.setTextColor(holder.itemView.getContext().getColor(R.color.card_title_normal));
-            holder.tvDueDate.setTextColor(holder.itemView.getContext().getColor(R.color.card_subtitle_normal));
-            holder.tvTitle.setPaintFlags(holder.tvTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+            binding.getRoot().setBackgroundResource(R.drawable.bg_card_in_progress);
+            binding.tvAssignmentTitle.setTextColor(holder.itemView.getContext().getColor(R.color.card_title_normal));
+            binding.tvDueDate.setTextColor(holder.itemView.getContext().getColor(R.color.card_subtitle_normal));
+            binding.tvAssignmentTitle.setPaintFlags(binding.tvAssignmentTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
 
-            holder.tvStatus.setText(R.string.tag_in_progress);
-            holder.tvStatus.setBackgroundResource(R.drawable.bg_tag_in_progress);
-            holder.tvStatus.setTextColor(holder.itemView.getContext().getColor(R.color.tag_in_progress_text));
+            binding.tvStatusTag.setText(R.string.tag_in_progress);
+            binding.tvStatusTag.setBackgroundResource(R.drawable.bg_tag_in_progress);
+            binding.tvStatusTag.setTextColor(holder.itemView.getContext().getColor(R.color.tag_in_progress_text));
         }
     }
 
@@ -168,11 +171,11 @@ public class AssignmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
      * 날짜 구분선 뷰홀더
      */
     public static class HeaderViewHolder extends RecyclerView.ViewHolder {
-        TextView tvDateHeader;
+        final ItemDateHeaderBinding binding;
 
-        public HeaderViewHolder(@NonNull View itemView) {
-            super(itemView);
-            tvDateHeader = itemView.findViewById(R.id.tv_date_header);
+        public HeaderViewHolder(@NonNull ItemDateHeaderBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 
@@ -180,14 +183,11 @@ public class AssignmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
      * 과제 아이템 뷰홀더
      */
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
-        TextView tvCategory, tvTitle, tvDueDate, tvStatus;
+        final ItemAssignmentBinding binding;
 
-        public ItemViewHolder(@NonNull View itemView) {
-            super(itemView);
-            tvCategory = itemView.findViewById(R.id.tv_category_tag);
-            tvTitle = itemView.findViewById(R.id.tv_assignment_title);
-            tvDueDate = itemView.findViewById(R.id.tv_due_date);
-            tvStatus = itemView.findViewById(R.id.tv_status_tag);
+        public ItemViewHolder(@NonNull ItemAssignmentBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 }

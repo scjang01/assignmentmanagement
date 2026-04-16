@@ -3,7 +3,7 @@
     "subject": "AI 프로그래밍",
     "title": "중간고사 대체 레포트",
     "category": "과제",
-    "deadline": "2026-04-13 10:00",
+    "deadline": "2026-04-14 10:00",
     "isSubmitted": true,
     "link": "https://canvas.university.edu/courses/1/assignments/101"
   },
@@ -11,7 +11,7 @@
     "subject": "데이터베이스",
     "title": "SQL 3주차 퀴즈",
     "category": "퀴즈",
-    "deadline": "2026-04-15 23:59",
+    "deadline": "2026-04-16 23:59",
     "isSubmitted": false,
     "link": "https://canvas.university.edu/courses/2/assignments/202"
   },
@@ -19,7 +19,7 @@
     "subject": "운영체제",
     "title": "OS 1주차 MOOC",
     "category": "녹화강의",
-    "deadline": "2026-04-16 18:00",
+    "deadline": "2026-04-17 18:00",
     "isSubmitted": false,
     "link": "https://canvas.university.edu/courses/3/assignments/303"
   },
@@ -27,7 +27,7 @@
     "subject": "자료구조",
     "title": "3주차 실시간 강의",
     "category": "실시간강의",
-    "deadline": "2026-04-16 09:00",
+    "deadline": "2026-04-17 09:00",
     "isSubmitted": false,
     "link": "https://canvas.university.edu/courses/4/assignments/404"
   },
@@ -35,7 +35,7 @@
     "subject": "컴퓨터네트워크",
     "title": "웹소켓 프로그래밍",
     "category": "과제",
-    "deadline": "2026-04-20 23:59",
+    "deadline": "2026-04-21 23:59",
     "isSubmitted": true,
     "link": "https://canvas.university.edu/courses/5/assignments/505"
   },
@@ -43,7 +43,7 @@
     "subject": "소프트웨어공학",
     "title": "요구사항 명세서 작성",
     "category": "과제",
-    "deadline": "2026-04-11 12:00",
+    "deadline": "2026-04-12 12:00",
     "isSubmitted": false,
     "link": "https://canvas.university.edu/courses/6/assignments/606"
   },
@@ -51,15 +51,15 @@
     "subject": "알고리즘",
     "title": "중간고사 연습문제 풀이",
     "category": "과제",
-    "deadline": "2026-04-15 17:00",
+    "deadline": "2026-04-16 17:00",
     "isSubmitted": false,
     "link": "https://canvas.university.edu/courses/7/assignments/707"
   },
   {
     "subject": "이산수학",
-    "title": "5장 증명법 퀴즈",
+    "title": "이산수학 퀴즈",
     "category": "퀴즈",
-    "deadline": "2026-04-14 23:59",
+    "deadline": "2026-04-15 23:59",
     "isSubmitted": true,
     "link": "https://canvas.university.edu/courses/8/assignments/808"
   },
@@ -67,23 +67,23 @@
     "subject": "모바일프로그래밍",
     "title": "안드로이드 생명주기 이해",
     "category": "녹화강의",
-    "deadline": "2026-04-22 18:00",
+    "deadline": "2026-04-21 18:00",
     "isSubmitted": false,
     "link": "https://canvas.university.edu/courses/9/assignments/909"
   },
   {
     "subject": "클라우드컴퓨팅",
-    "title": "AWS 실습 세미나",
+    "title": "AWS 실습",
     "category": "실시간강의",
-    "deadline": "2026-04-15 09:00",
+    "deadline": "2026-04-16 09:00",
     "isSubmitted": false,
     "link": "https://canvas.university.edu/courses/10/assignments/1010"
   },
   {
     "subject": "컴퓨터구조",
-    "title": "파이프라이닝 심화 학습",
+    "title": "심화 학습",
     "category": "녹화강의",
-    "deadline": "2026-04-18 21:00",
+    "deadline": "2026-04-19 21:00",
     "isSubmitted": false,
     "link": "https://canvas.university.edu/courses/11/assignments/1111"
   },
@@ -91,7 +91,7 @@
     "subject": "객체지향프로그래밍",
     "title": "디자인 패턴 적용 과제",
     "category": "과제",
-    "deadline": "2026-04-10 23:59",
+    "deadline": "2026-04-11 23:59",
     "isSubmitted": true,
     "link": "https://canvas.university.edu/courses/12/assignments/1212"
   }

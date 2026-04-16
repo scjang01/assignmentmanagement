@@ -2,18 +2,16 @@ package com.scjang01.assignment_management;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.scjang01.assignment_management.data.AssignmentRepository;
+import com.scjang01.assignment_management.databinding.ActivityMainBinding;
 import com.scjang01.assignment_management.model.AssignmentItem;
 import com.scjang01.assignment_management.model.DateHeader;
 
@@ -30,6 +28,7 @@ import java.util.Locale;
  */
 public class MainActivity extends AppCompatActivity {
 
+    private ActivityMainBinding binding;
     private AssignmentRepository repository;
 
     @Override
@@ -38,14 +37,14 @@ public class MainActivity extends AppCompatActivity {
         
         // 화면 상단바/하단바 영역까지 꽉 채우기
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         
         // 데이터 가져올 준비
         repository = new AssignmentRepository(this);
         
         // 상단 툴바 설정 (타이틀 안 보이게 처리)
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(binding.toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
@@ -72,16 +71,24 @@ public class MainActivity extends AppCompatActivity {
         List<Object> displayItems = new ArrayList<>();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             String lastDate = "";
+            LocalDateTime today = LocalDateTime.now();
             DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             DateTimeFormatter headerFormatter = DateTimeFormatter.ofPattern("M. d(E)", Locale.KOREAN);
 
             for (AssignmentItem item : assignmentList) {
                 LocalDateTime dateTime = LocalDateTime.parse(item.getDeadline(), inputFormatter);
                 String currentDate = dateTime.toLocalDate().toString();
+                String stringToday = today.toLocalDate().toString();
+
 
                 // 날짜가 변경될 때마다 헤더 객체 삽입
                 if (!currentDate.equals(lastDate)) {
-                    displayItems.add(new DateHeader(dateTime.format(headerFormatter)));
+                    if (stringToday.equals(currentDate)) {
+                        displayItems.add(new DateHeader(dateTime.format(headerFormatter)+" 오늘"));
+                    }
+                    else {
+                        displayItems.add(new DateHeader(dateTime.format(headerFormatter)));
+                    }
                     lastDate = currentDate;
                 }
                 displayItems.add(item);
@@ -117,29 +124,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // 상단 통계 숫자 업데이트 (02, 05 처럼 두자리 포맷 유지)
-        TextView tvInProgress = findViewById(R.id.tv_count_in_progress);
-        TextView tvUrgent = findViewById(R.id.tv_count_urgent);
-        TextView tvCompleted = findViewById(R.id.tv_count_completed);
-        TextView tvMissed = findViewById(R.id.tv_count_missed);
-
-        tvInProgress.setText(String.format("%02d", countInProgress));
-        tvUrgent.setText(String.format("%02d", countUrgent));
-        tvCompleted.setText(String.format("%02d", countCompleted));
-        tvMissed.setText(String.format("%02d", countMissed));
+        binding.tvCountInProgress.setText(String.format("%02d", countInProgress));
+        binding.tvCountUrgent.setText(String.format("%02d", countUrgent));
+        binding.tvCountCompleted.setText(String.format("%02d", countCompleted));
+        binding.tvCountMissed.setText(String.format("%02d", countMissed));
 
         // 상태바/네비바 때문에 레이아웃 가려지지 않게 여백 조정
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main, (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
         // 리스트(RecyclerView) 설정
-        RecyclerView recyclerView = findViewById(R.id.rv_assignments);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        binding.rvAssignments.setLayoutManager(new LinearLayoutManager(this));
         
         // 어댑터 붙여서 화면에 리스트 뿌리기
         AssignmentAdapter adapter = new AssignmentAdapter(displayItems);
-        recyclerView.setAdapter(adapter);
+        binding.rvAssignments.setAdapter(adapter);
     }
 }
